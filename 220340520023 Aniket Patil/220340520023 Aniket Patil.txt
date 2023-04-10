@@ -1,0 +1,211 @@
+	Section I
+
+Q. 1) 
+
+create table dept (
+DEPTNO int(2),
+DNAME varchar(15),
+LOC varchar(10)
+);
+
+insert into dept values 
+(10, 'ACCOUNTING', 'NEW YORK'),
+(20, 'RESEARCH', 'DALLAS'),
+(30, 'SALES', 'CHICAGO'),
+(40, 'OPERATIONS', 'BOSTON');
+
+select * from dept;
+
+10	ACCOUNTING	NEW YORK
+20	RESEARCH	DALLAS
+30	SALES	CHICAGO
+40	OPERATIONS	BOSTON
+================================================================
+Q. 2) 
+
+create table emp (
+EMPNO int(4),
+ENAME varchar(10),
+JOB varchar(9),
+HIREDATE date,
+SAL float(7,2),
+COMM float(7,2),
+DEPTNO int(2)
+);
+
+
+insert into emp values 
+(7839, 'KING', 'MANAGER', '1991-11-17', 5000, NULL, 10),
+(7698, 'BLAKE', 'CLERK', '1981-05-01', 2850, NULL, 30),
+(7782, 'CLARK', 'MANAGER', '1981-06-09', 2450, NULL, 10),
+(7566, 'JONES', 'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN', 'SALESMAN', '1981-09-28', 1250, 1400, 30),
+(7499, 'ALLEN', 'SALESMAN', '1981-02-20', 1600, 300, 30);
+
+select * from emp;
+
+7839	KING	MANAGER	1991-11-17	5000.00			10
+7698	BLAKE	CLERK		1981-05-01	2850.00			30
+7782	CLARK	MANAGER	1981-06-09	2450.00			10
+7566	JONES	CLERK		1981-04-02	2975.00			20
+7654	MARTIN SALESMAN	1981-09-28	1250.00	1400.00	30
+7499	ALLEN	SALESMAN	1981-02-20	1600.00	300.00	30
+
+===================================================================
+Q. 3)
+ 
+select * from emp
+where sal between 2500 and 5000; 
+
+Q. 4)
+
+select ename from emp 
+order by ename desc;
+
+Q. 5)
+
+select Lower(job) from emp;
+
+manager
+clerk
+manager
+clerk
+salesman
+salesman
+
+Q. 6) 
+
+select ename, length(ename) from emp;
+
+KING	4
+BLAKE	5
+CLARK	5
+JONES	5
+MARTIN 6
+ALLEN	5
+
+Q. 7)
+
+select deptno, count(*) as count from emp 
+group by deptno;
+
+10	2
+30	3
+20	1
+
+Q. 8)
+
+select dname, ename from emp, dept 
+where dept.deptno = emp.deptno;
+
+ACCOUNTING	KING
+SALES	BLAKE
+ACCOUNTING	CLARK
+RESEARCH	JONES
+SALES	MARTIN
+SALES	ALLEN
+
+
+Q. 9)
+
+select ename, Position('AR' in ename) from emp;
+
+KING	0
+BLAKE	0
+CLARK	3
+JONES	0
+MARTIN	2
+ALLEN	0
+
+
+Q. 10) 
+
+select ename, sal, sal*0.20 as HRA from emp; 
+
+KING	5000.00	1000.00
+BLAKE	2850.00	570.00
+CLARK	2450.00	490.00
+JONES	2975.00	595.00
+MARTIN	1250.00	250.00
+ALLEN	1600.00	320.00
+
+=================================================
+
+Section II
+
+Q. 1)
+create table exam (
+a varchar(20),
+b varchar(20),
+C varchar(20)
+);
+
+delimiter // 
+create procedure proc1 (a varchar(20), b varchar(20))
+begin 
+	declare x int(5);
+    set x = locate(a,b);
+    if (x != 0) then
+		insert into exam values (a, b, 'Present');
+    else 
+		insert into exam values (a, b, 'Absent');
+        
+	end if;
+    
+end; //
+delimiter ;
+
+call proc1 ('Aniket', 'AniketPatil');
+
+select * from exam ;
+
+drop procedure proc1;
+drop table exam;
+
+Aniket	AniketPatil	Present
+
+-----------------------------------
+Q. 2)
+
+delimiter //
+create function func1 (a int, b int, c int) returns boolean 
+deterministic 
+begin
+	declare x int;
+	declare y int;
+	declare z int;
+	
+    if x < (y+z) 
+    then return TRUE;
+	
+    elseif z < y+x then 
+		return True;
+        
+	else 
+		return FALSE;
+        
+	end if;
+    
+end ; //
+delimiter ;
+
+-- call func1(10, 20, 30);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
